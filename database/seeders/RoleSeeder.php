@@ -65,5 +65,21 @@ class RoleSeeder extends Seeder
             'password' => Hash::make('1234'), // password
             'remember_token' => Str::random(10),
         ])->assignRole('student');
+
+        User::create([
+            'name' => 'Supe',
+            'email' => 'supe@mail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('1234'), // password
+            'remember_token' => Str::random(10),
+        ])->assignRole('super-admin');
+
+        User::create([
+            'name' => 'No Role',
+            'email' => 'nope@mail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('1234'), // password
+            'remember_token' => Str::random(10),
+        ]);//->assignRole('super-admin');
     }
 }

@@ -21,17 +21,17 @@ use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware(['role_check']);;
+});//->middleware(['role_check']);
 
 //Auth::routes();
 
 Auth::routes([
-    'register' => true, // Registration Routes...
-    'reset' => true, // Password Reset Routes...
-    'verify' => false, // Email Verification Routes...
+    'register'  => true, // Registration Routes...
+    'reset'     => true, // Password Reset Routes...
+    'verify'    => false, // Email Verification Routes...
   ]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');//->middleware(['role_check']);
 
 // Route::get('/social/google', [])->name('google');
 
@@ -39,6 +39,11 @@ Route::get('google/redirect', function () {
     //return Socialite::driver('google')->redirect();
     return Socialite::driver('google')->with(["access_type" => "offline", "prompt" => "consent select_account"])->redirect();
 })->name('google');
+
+
+Route::get('/norole', function () {
+    return 'no role';
+});
 
 
 Route::get('google/callback', 'UserController@callback');

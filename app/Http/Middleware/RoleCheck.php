@@ -41,23 +41,50 @@ class RoleCheck
         */
 
         $response = $next($request);
-
+        
+        /*
         if(Auth::user()->hasRole('Warga') && Auth::user()->status_akun == 1){
             return redirect('mandiri');
         }
-        
-        elseif (Auth::user()->hasRole('Admin')){
-            return redirect('admin');
+        */
+        /*
+Role::create(['name' => 'super-admin']);
+Role::create(['name' => 'student']);
+Role::create(['name' => 'teacher']);
+        */
+
+        if (Auth::user()->hasRole('super-admin')){
+            return redirect('supe');
         }
         
-        elseif (Auth::user()->hasRole('Staff')){
-            return redirect('staff');
+        elseif (Auth::user()->hasRole('student')){
+            return redirect('student');
 
         }
-        elseif (Auth::user()->hasRole('super-admin')){
-            return redirect('ocisly');
+        elseif (Auth::user()->hasRole('teacher')){
+            return redirect('teacher');
+        }
+        else{
+            return redirect('norole');
         }
 
         return $response;
     }
 }
+
+/*
+$response = $next($request);
+        
+if (Auth::user()->hasRole('super-admin')){
+    return redirect('supe');
+
+}elseif (Auth::user()->hasRole('student')){
+        return redirect('student');
+
+} else {
+    return redirect('norole');
+}
+
+return $response;
+}
+*/
