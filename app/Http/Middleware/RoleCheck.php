@@ -23,48 +23,18 @@ class RoleCheck
     public function handle(Request $request, Closure $next)
     {
         
-        /*
-        if ($request->input('token') !== 'my-secret-token') {
-            return redirect('home');
-        }
- 
-        return $next($request);
-        */
-        /*()
-        $user = User::role('writer')->get();
-
-        if ( ){
-            echo 'asdasd ';
-        } 
-
-        return $next($request);
-        */
-
         $response = $next($request);
-        
-        /*
-        if(Auth::user()->hasRole('Warga') && Auth::user()->status_akun == 1){
-            return redirect('mandiri');
-        }
-        */
-        /*
-Role::create(['name' => 'super-admin']);
-Role::create(['name' => 'student']);
-Role::create(['name' => 'teacher']);
-        */
 
         if (Auth::user()->hasRole('super-admin')){
             return redirect('supe');
-        }
-        
+        } 
         elseif (Auth::user()->hasRole('student')){
             return redirect('student');
 
-        }
-        elseif (Auth::user()->hasRole('teacher')){
+        } elseif (Auth::user()->hasRole('teacher')){
             return redirect('teacher');
-        }
-        else{
+        
+        } else {
             return redirect('norole');
         }
 
@@ -72,19 +42,3 @@ Role::create(['name' => 'teacher']);
     }
 }
 
-/*
-$response = $next($request);
-        
-if (Auth::user()->hasRole('super-admin')){
-    return redirect('supe');
-
-}elseif (Auth::user()->hasRole('student')){
-        return redirect('student');
-
-} else {
-    return redirect('norole');
-}
-
-return $response;
-}
-*/

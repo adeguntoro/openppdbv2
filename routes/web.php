@@ -33,40 +33,21 @@ Auth::routes([
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');//->middleware(['role_check']);
 
-// Route::get('/social/google', [])->name('google');
-
-Route::get('google/redirect', function () {
-    //return Socialite::driver('google')->redirect();
-    return Socialite::driver('google')->with(["access_type" => "offline", "prompt" => "consent select_account"])->redirect();
-})->name('google');
-
 
 Route::get('/norole', function () {
     return 'no role';
 });
 
+Route::get('/greeting', function () {
+    return 'Hello World';
+})->middleware(['role_check']);
+
+// Socialite Google
+Route::get('google/redirect', function () {
+    return Socialite::driver('google')->with(["access_type" => "offline", "prompt" => "consent select_account"])->redirect();
+})->name('google');
 
 Route::get('google/callback', 'UserController@callback');
-
-/*
-Route::get('google/callback', function () {
-    $user = Socialite::driver('google')->user();
-    //dd($user);
-    
-    return response()->json([
-        'name' => $user->name,
-        'email' => $user->email,
-        'nickname' => $user->nickname,
-        'avatar' => $user->avatar,
-        'id' => $user->id
-    ]);
-    
-    //return view('home', )
-    //return view('home', [
-    //    'user' => $user
-    //]);
-});
-*/
 
 //dashboard base on role
 Route::group(['middleware' => ['auth','role:super-admin']], function () {
